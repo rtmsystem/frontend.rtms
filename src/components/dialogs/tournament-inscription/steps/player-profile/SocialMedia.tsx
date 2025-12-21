@@ -22,7 +22,7 @@ const SocialMedia = () => {
       <CardHeader title='Redes Sociales' />
       <CardContent>
         <Grid container spacing={4}>
-          <Grid size={{ xs: 12, md: 4 }}>
+          {/* <Grid size={{ xs: 12, md: 4 }}>
             <Controller
               name='instagram_url'
               control={control}
@@ -38,9 +38,9 @@ const SocialMedia = () => {
                 />
               )}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid size={{ xs: 12, md: 4 }}>
+          {/* <Grid size={{ xs: 12, md: 4 }}>
             <Controller
               name='facebook_url'
               control={control}
@@ -56,8 +56,8 @@ const SocialMedia = () => {
                 />
               )}
             />
-          </Grid>
-
+          </Grid> */}
+{/* 
           <Grid size={{ xs: 12, md: 4 }}>
             <Controller
               name='linkedin_url'
@@ -74,7 +74,7 @@ const SocialMedia = () => {
                 />
               )}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </CardContent>
     </Card>

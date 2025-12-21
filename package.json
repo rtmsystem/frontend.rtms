@@ -46,7 +46,8 @@
     "react-toastify": "^11.0.5",
     "react-use": "17.6.0",
     "server-only": "0.0.1",
-    "valibot": "^1.1.0"
+    "valibot": "^1.1.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@iconify/json": "2.2.286",

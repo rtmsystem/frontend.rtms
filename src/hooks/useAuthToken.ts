@@ -73,7 +73,7 @@ export function useAuthToken() {
         let finalAuthHeaders = authHeaders
         if (isFormData && authHeaders['Content-Type']) {
           const { 'Content-Type': _, ...headersWithoutContentType } = authHeaders
-          finalAuthHeaders = headersWithoutContentType
+          finalAuthHeaders = headersWithoutContentType as typeof authHeaders
         }
 
         const headers = {
@@ -85,7 +85,7 @@ export function useAuthToken() {
         ...options,
         headers: Object.fromEntries(
             Object.entries(headers).filter(([_, v]) => v !== undefined)
-        ),
+        ) as Record<string, string>,
         })
 
         if (response.status === 401) {
@@ -100,7 +100,7 @@ export function useAuthToken() {
                 let finalRetryHeaders = retryAuthHeaders
                 if (isFormData && retryAuthHeaders['Content-Type']) {
                   const { 'Content-Type': _, ...headersWithoutContentType } = retryAuthHeaders
-                  finalRetryHeaders = headersWithoutContentType
+                  finalRetryHeaders = headersWithoutContentType as typeof retryAuthHeaders
                 }
                 
                 const newHeaders = {
@@ -112,7 +112,7 @@ export function useAuthToken() {
                     ...options,
                     headers: Object.fromEntries(
                     Object.entries(newHeaders).filter(([_, v]) => v !== undefined)
-                    ),
+                    ) as Record<string, string>,
                 })
             
             

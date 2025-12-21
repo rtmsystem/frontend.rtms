@@ -13,7 +13,6 @@ import Box from '@mui/material/Box'
 // Component Imports
 import PersonalInformation from './PersonalInformation'
 import PhysicalInformation from './PhysicalInformation'
-import DocumentInformation from './DocumentInformation'
 import EmergencyContact from './EmergencyContact'
 import PlayerPhotoUpload from './PlayerPhotoUpload'
 
@@ -55,10 +54,7 @@ const PlayerProfile = ({ onSuccess }: PlayerProfileProps) => {
                     <PhysicalInformation />
                 </Grid>
 
-                {/* <Grid size={{ xs: 12 }}>
-              <DocumentInformation />
-            </Grid> */}
-
+              
                 <Grid size={{ xs: 12 }}>
                     <EmergencyContact />
                 </Grid>

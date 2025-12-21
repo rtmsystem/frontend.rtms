@@ -9,6 +9,7 @@ import type { TextFieldProps } from '@mui/material/TextField'
 
 // Third-party Imports
 import { NumericFormat } from 'react-number-format'
+import { InternalNumberFormatBase } from 'react-number-format/types/types'
 
 type CurrencyFieldProps = Omit<TextFieldProps, 'value' | 'onChange'> & {
   value?: number | string
@@ -19,7 +20,7 @@ const CurrencyField = forwardRef<HTMLInputElement, CurrencyFieldProps>(
   ({ value, onChange, ...textFieldProps }, ref) => {
     return (
       <NumericFormat
-        {...textFieldProps}
+        {...textFieldProps as InternalNumberFormatBase}
         getInputRef={ref}
         value={value || ''}
         onValueChange={(values) => {

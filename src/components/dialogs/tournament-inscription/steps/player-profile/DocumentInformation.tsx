@@ -23,7 +23,7 @@ const DocumentInformation = () => {
       <CardHeader title='Información de Documentos' />
       <CardContent>
         <Grid container spacing={4}>
-          <Grid size={{ xs: 12, md: 6 }}>
+          {/* <Grid size={{ xs: 12, md: 6 }}>
             <Controller
               name='document_type'
               control={control}
@@ -43,9 +43,9 @@ const DocumentInformation = () => {
                 </CustomTextField>
               )}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid size={{ xs: 12, md: 6 }}>
+          {/* <Grid size={{ xs: 12, md: 6 }}>
             <Controller
               name='document_number'
               control={control}
@@ -60,7 +60,7 @@ const DocumentInformation = () => {
                 />
               )}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </CardContent>
     </Card>
