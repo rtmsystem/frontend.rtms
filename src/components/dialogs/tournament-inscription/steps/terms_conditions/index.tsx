@@ -54,7 +54,7 @@ const TermsConditionsStep = ({ setIsNextDisabled }: TermsConditionsStepProps) =>
                         )}
                     />
                 }
-                label={<Typography variant="body1">Acepto el Tratamiento de mis Datos Personales según la <Link href="/privacy-policy" target="_blank">Política de Privacidad</Link></Typography>}
+                label={<Typography variant="body1">Acepto el Tratamiento de mis Datos Personales según la <Link href="/legal/privacy-policy" target="_blank">Política de Privacidad</Link></Typography>}
             />
 
             <FormControlLabel
@@ -74,7 +74,7 @@ const TermsConditionsStep = ({ setIsNextDisabled }: TermsConditionsStepProps) =>
                         )}
                     />
                 }
-                label={<Typography variant="body1">Acepto los <Link href="/terms-conditions" target="_blank">Términos y Condiciones del torneo.</Link></Typography>}
+                label={<Typography variant="body1">Acepto los <Link href="/legal/terms-conditions" target="_blank">Términos y Condiciones del torneo.</Link></Typography>}
             />
 
         </Box>

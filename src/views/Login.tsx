@@ -92,10 +92,10 @@ const Login = ({ mode }: { mode: SystemMode }) => {
   // Vars
   const darkImg = '/images/pages/auth-mask-dark.png'
   const lightImg = '/images/pages/auth-mask-light.png'
-  const darkIllustration = '/images/illustrations/auth/v2-login-dark.png'
-  const lightIllustration = '/images/illustrations/auth/v2-login-light.png'
-  const borderedDarkIllustration = '/images/illustrations/auth/v2-login-dark-border.png'
-  const borderedLightIllustration = '/images/illustrations/auth/v2-login-light-border.png'
+  const darkIllustration = '/images/illustrations/auth/v1-login-logo.png'
+  const lightIllustration = '/images/illustrations/auth/v1-login-logo.png'
+  const borderedDarkIllustration = '/images/illustrations/auth/v1-login-logo.png'
+  const borderedLightIllustration = '/images/illustrations/auth/v1-login-logo.png'
 
   // Hooks
   const router = useRouter()
@@ -113,8 +113,8 @@ const Login = ({ mode }: { mode: SystemMode }) => {
   } = useForm<FormData>({
     resolver: valibotResolver(schema),
     defaultValues: {
-      email: 'admin@rtms.com',
-      password: 'admin123'
+      email: process.env.NODE_ENV === 'development' ? 'admin@rtms.com' : '',
+      password: process.env.NODE_ENV === 'development' ? 'admin123' : ''
     }
   })
 
@@ -171,16 +171,16 @@ const Login = ({ mode }: { mode: SystemMode }) => {
             <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}! 👋🏻`}</Typography>
             <Typography>Please sign-in to your account and start the adventure</Typography>
           </div>
-          <Alert icon={false} className='bg-[var(--mui-palette-primary-lightOpacity)]'>
+          {/* <Alert icon={false} className='bg-[var(--mui-palette-primary-lightOpacity)]'>
             <Typography variant='body2' color='primary.main'>
               Email: <span className='font-medium'>admin@vuexy.com</span> / Pass:{' '}
               <span className='font-medium'>admin</span>
             </Typography>
-          </Alert>
+          </Alert> */}
           <form
             noValidate
             autoComplete='off'
-            action={() => {}}
+            action={() => { }}
             onSubmit={handleSubmit(onSubmit)}
             className='flex flex-col gap-6'
           >
@@ -242,7 +242,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
                 />
               )}
             />
-            <div className='flex justify-between items-center gap-x-3 gap-y-1 flex-wrap'>
+            {/* <div className='flex justify-between items-center gap-x-3 gap-y-1 flex-wrap'>
               <FormControlLabel control={<Checkbox defaultChecked />} label='Remember me' />
               <Typography
                 className='text-end'
@@ -252,17 +252,17 @@ const Login = ({ mode }: { mode: SystemMode }) => {
               >
                 Forgot password?
               </Typography>
-            </div>
+            </div> */}
             <Button fullWidth variant='contained' type='submit'>
               Login
             </Button>
-            <div className='flex justify-center items-center flex-wrap gap-2'>
+            {/* <div className='flex justify-center items-center flex-wrap gap-2'>
               <Typography>New on our platform?</Typography>
               <Typography component={Link} href={'/register'} color='primary.main'>
                 Create an account
               </Typography>
-            </div>
-           
+            </div> */}
+
           </form>
         </div>
       </div>

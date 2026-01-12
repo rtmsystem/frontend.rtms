@@ -50,10 +50,10 @@ export type Config = {
 }
 
 const themeConfig: Config = {
-  templateName: 'Vuexy',
-  homePageUrl: '/home',
+  templateName: 'RTMS',
+  homePageUrl: '/tournaments',
   settingsCookieName: 'vuexy-mui-next-demo-1',
-  mode: 'system', // 'system', 'light', 'dark'
+  mode: 'dark', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
   semiDark: true, // true, false
   layout: 'vertical', // 'vertical', 'collapsed', 'horizontal'

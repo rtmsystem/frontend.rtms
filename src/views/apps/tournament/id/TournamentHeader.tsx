@@ -76,7 +76,7 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
     setUploadingLogo(true)
     try {
       const formData = new FormData()
-      
+
       if (file) {
         formData.append('logo', file)
       } else {
@@ -90,13 +90,13 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
       })
 
       const result = await response.json()
-      
+
       if (response.ok) {
         // Actualizar el torneo en el contexto con los datos del servidor
         if (result.data && tournament) {
           updateTournament({ ...tournament, ...result.data })
         }
-        
+
         if (file) {
           // Si se subió un archivo, crear preview local mientras se actualiza en el servidor
           const reader = new FileReader()
@@ -104,7 +104,7 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
             setLogoUrl(reader.result as string)
           }
           reader.readAsDataURL(file)
-          
+
           // Actualizar con la URL del servidor si está disponible
           if (result.data?.logo) {
             setLogoUrl(result.data.logo)
@@ -128,12 +128,25 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
   const bannerImage = tournament?.banner || 'https://res.cloudinary.com/dd7dzmgeg/image/upload/v1761687717/Group_6_zfjjy7.png'
 
   return (
-    <Card>
+    <Card
+    // style={{
+    //   backgroundImage: `url(${bannerImage})`,
+    //   backgroundSize: 'cover',
+    //   backgroundPosition: 'center',
+    //   backgroundRepeat: 'no-repeat',
+
+    >
       <CardMedia
         image={bannerImage}
         className='bs-[250px]'
       />
-      <CardContent className='flex gap-5 justify-center flex-col items-center md:items-end md:flex-row !pt-0 md:justify-start'>
+
+      <CardContent
+        style={{
+          backgroundColor: `var(--mui-palette-primary-lightOpacity)`,
+          color: `var(--mui-palette-primary-main)`
+        }}
+        className='flex gap-5 bg-primary  justify-center flex-col items-center md:items-end md:flex-row !pt-0 md:justify-start'>
         <AvatarUpload
           src={logoUrl}
           alt={tournament?.name || 'Tournament logo'}
@@ -162,7 +175,7 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
               </div>
             </div>
           </div>
-          {isAdmin && !isTournamentPublished &&  (
+          {isAdmin && !isTournamentPublished && (
             <OpenDialogOnElementClick
               element={Button}
               elementProps={{
@@ -172,7 +185,7 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
                 startIcon: <i className='tabler-lock-open-2'></i>,
                 className: 'flex gap-2',
               }}
-              dialog={ConfirmationDialog  }
+              dialog={ConfirmationDialog}
               dialogProps={{
                 loading: loading,
                 title: 'Publicar torneo',
@@ -183,35 +196,35 @@ const TournamentHeader = ({ tournament: tournamentProp }: { tournament?: Tournam
               }}
             />
           )}
-          {isGuest && isTournamentPublished && !allDivisionsPublished &&(
-             <OpenDialogOnElementClick
-             
-             element={Button}
-             elementProps={{
-               children: 'Regístrate ahora',
-               variant: 'contained',
-               startIcon: <i className='tabler-lock-open-2'></i>,
-               className: 'flex gap-2 cursor-pointer transition-all duration-300',
-               sx: {
-                background: 'linear-gradient(90deg, #ff6b6b 0%, #ffa94d 16.66%, #ffd93d 33.33%, #6bcf7f 50%, #4d9de0 66.66%, #9d8df1 83.33%, #c44569 100%)',
-                backgroundSize: '300% 100%',
-                position: 'relative',
-                overflow: 'hidden',
-                color: '#fff',
-                fontWeight: 600,
-                animation: 'rainbow-shift 8s ease-in-out infinite, rainbow-pulse 2s ease-in-out infinite',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: '0 8px 35px rgba(157, 141, 241, 0.6)',
-                },
-              },
-             }}
-             dialog={InscriptionDialog  }
-            
-           />
-         )}
+          {isGuest && isTournamentPublished && !allDivisionsPublished && (
+            <OpenDialogOnElementClick
 
-        
+              element={Button}
+              elementProps={{
+                children: 'Regístrate ahora',
+                variant: 'contained',
+                startIcon: <i className='tabler-lock-open-2'></i>,
+                className: 'flex gap-2 cursor-pointer transition-all duration-300',
+                sx: {
+                  background: 'linear-gradient(90deg, #ff6b6b 0%, #ffa94d 16.66%, #ffd93d 33.33%, #6bcf7f 50%, #4d9de0 66.66%, #9d8df1 83.33%, #c44569 100%)',
+                  backgroundSize: '300% 100%',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  color: '#fff',
+                  fontWeight: 600,
+                  animation: 'rainbow-shift 8s ease-in-out infinite, rainbow-pulse 2s ease-in-out infinite',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    boxShadow: '0 8px 35px rgba(157, 141, 241, 0.6)',
+                  },
+                },
+              }}
+              dialog={InscriptionDialog}
+
+            />
+          )}
+
+
         </div>
       </CardContent>
       <ToastContainer />
