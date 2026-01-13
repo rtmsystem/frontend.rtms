@@ -75,6 +75,9 @@ const InscriptionDialog = (props: InscriptionDialogProps) => {
             avatar: '',
             payment_file: null,
             payment_method: null,
+            medical_conditions: '',
+            blood_type: '',
+            health_insurance: '',
         }
     })
 
@@ -204,10 +207,10 @@ const InscriptionDialog = (props: InscriptionDialogProps) => {
 
     const handleClose = (event: React.SyntheticEvent<Element, Event>, reason: string) => {
         if (reason && reason === "backdropClick") {
-          return
+            return
         }
         setOpen(false)
-      }
+    }
 
     const continueToNextStep = async () => {
         trigger()
@@ -290,7 +293,7 @@ const InscriptionDialog = (props: InscriptionDialogProps) => {
     }
 
     return (
-        <Dialog  className='overflow-y-auto h-[calc(100%)]' scroll='body' fullScreen={isMobile} fullWidth={true} maxWidth='xl' open={open} onClose={handleClose}>
+        <Dialog className='overflow-y-auto h-[calc(100%)]' scroll='body' fullScreen={isMobile} fullWidth={true} maxWidth='xl' open={open} onClose={handleClose}>
             <DialogTitle className='flex w-full justify-between items-center'>
                 <Typography>Proceso de inscripción</Typography>
                 <CustomIconButton variant='outlined' size='small' color='secondary' onClick={() => setOpen(false)}>

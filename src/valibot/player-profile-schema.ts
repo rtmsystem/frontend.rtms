@@ -1,4 +1,4 @@
-import { object, string, pipe, forward,boolean,custom, minLength, email, optional, nullable, date, number, minValue, transform, union, null_, array, check, any } from 'valibot'
+import { object, string, pipe, forward, boolean, custom, minLength, email, optional, nullable, date, number, minValue, transform, union, null_, array, check, any } from 'valibot'
 
 export const playerProfileSchema = object({
   // Required fields
@@ -57,8 +57,14 @@ export const playerProfileSchema = object({
   emergency_contact_last_name: pipe(string(), minLength(1, 'Este campo es requerido')),
   emergency_contact_phone: pipe(string(), minLength(1, 'Este campo es requerido')),
   emergency_contact_relationship: pipe(string(), minLength(1, 'Este campo es requerido')),
+
+  // Medical Information
+  health_insurance: pipe(string(), minLength(1, 'Este campo es requerido')),
+  blood_type: pipe(string(), minLength(1, 'Este campo es requerido')),
+  medical_conditions: optional(nullable(string())),
+
   // Campos opcionales para compañeros de dobles (se validan condicionalmente en el componente)
-  involvements: 
+  involvements:
     array(object({
       division_id: number(),
       is_doubles: optional(boolean(), false),
@@ -92,5 +98,5 @@ export const playerProfileSchema = object({
   //     return true;
   //   }, 'Los datos del compañero son requeridos para categorías de dobles')
   // )
-  
+
 })

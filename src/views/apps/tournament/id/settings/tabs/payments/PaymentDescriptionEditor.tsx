@@ -22,6 +22,7 @@ type PaymentDescriptionEditorProps = {
   onChange?: (value: string) => void
   error?: boolean
   helperText?: string
+  placeholder?: string
 }
 
 const EditorToolbar = ({ editor }: { editor: Editor | null }) => {
@@ -132,7 +133,8 @@ const PaymentDescriptionEditor = ({
   value,
   onChange,
   error,
-  helperText
+  helperText,
+  placeholder
 }: PaymentDescriptionEditorProps) => {
   const editor = useEditor({
     extensions: [
@@ -140,7 +142,7 @@ const PaymentDescriptionEditor = ({
         underline: false
       }),
       Placeholder.configure({
-        placeholder: 'Escribe aquí la descripción de los pagos e inscripciones...'
+        placeholder: placeholder || 'Escribe aquí la descripción de los pagos e inscripciones...'
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph']

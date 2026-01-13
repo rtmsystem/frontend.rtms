@@ -22,6 +22,7 @@ import type { InferInput } from 'valibot'
 // Component Imports
 import CustomTextField from '@core/components/mui/TextField'
 import CustomAvatar from '@core/components/mui/Avatar'
+import PaymentDescriptionEditor from './tabs/payments/PaymentDescriptionEditor'
 
 // Type Imports
 import type { Tournament } from '@/types/apps/tournament/tournamentTypes'
@@ -214,13 +215,10 @@ const BasicInformationForm = ({ tournament }: Props) => {
                     <Controller
                       name='description'
                       control={control}
-                      render={({ field }) => (
-                        <CustomTextField
-                          {...field}
-                          fullWidth
-                          multiline
-                          rows={4}
-                          label='Descripción'
+                      render={({ field: { value, onChange } }) => (
+                        <PaymentDescriptionEditor
+                          value={value || ''}
+                          onChange={onChange}
                           placeholder='Ingrese una descripción del torneo'
                           error={!!errors.description}
                           helperText={errors.description?.message}

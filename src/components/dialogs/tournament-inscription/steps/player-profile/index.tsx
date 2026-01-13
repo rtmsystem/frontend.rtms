@@ -13,6 +13,7 @@ import Box from '@mui/material/Box'
 // Component Imports
 import PersonalInformation from './PersonalInformation'
 import PhysicalInformation from './PhysicalInformation'
+import MedicalInformation from './Medicalnformation'
 import EmergencyContact from './EmergencyContact'
 import PlayerPhotoUpload from './PlayerPhotoUpload'
 
@@ -30,7 +31,7 @@ interface PlayerProfileProps {
 const PlayerProfile = ({ onSuccess }: PlayerProfileProps) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-   
+
     return (
         <Box className='flex flex-col gap-6'>
             {
@@ -54,7 +55,12 @@ const PlayerProfile = ({ onSuccess }: PlayerProfileProps) => {
                     <PhysicalInformation />
                 </Grid>
 
-              
+                <Grid size={{ xs: 12 }}>
+                    <MedicalInformation />
+                </Grid>
+
+
+
                 <Grid size={{ xs: 12 }}>
                     <EmergencyContact />
                 </Grid>
@@ -63,7 +69,7 @@ const PlayerProfile = ({ onSuccess }: PlayerProfileProps) => {
                     <PlayerPhotoUpload />
                 </Grid>
             </Grid>
-            
+
         </Box>
     )
 }
