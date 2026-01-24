@@ -12,7 +12,9 @@ export type Involvement = {
     player_first_name: string
     player_last_name: string
     player_avatar: string
+    official_avatar: string
     player_email: string
+    player_gender: string
     partner_first_name: string
     participant_type: ParticipantType
     partner_last_name: string
