@@ -101,7 +101,8 @@ const CategoriesTab = ({ divisions, tournamentId }: Props) => {
     const labels: Record<string, string> = {
       knockout: 'Eliminación directa',
       league: 'Liga',
-      round_robin: 'Todos contra todos'
+      round_robin: 'Todos contra todos',
+      round_robin_knockout: 'Grupos + Eliminación directa'
     }
     return labels[format] || format
   }

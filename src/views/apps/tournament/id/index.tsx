@@ -1,7 +1,7 @@
 'use client'
 // React Imports
 import { useState, useEffect, useMemo } from 'react'
-import type {  SyntheticEvent } from 'react'
+import type { SyntheticEvent } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import type { Tournament } from '@/types/apps/tournament/tournamentTypes'
@@ -22,7 +22,7 @@ import { useTournament } from '@/contexts/TournamentContext'
 
 type TournamentContentProps = {
     tournament?: Tournament
-  }
+}
 
 
 const tabs = [
@@ -42,6 +42,11 @@ const tabs = [
         icon: <i className='tabler-calendar-stats text-xl' />
     },
     {
+        label: 'Clasificación',
+        value: 'standings',
+        icon: <i className='tabler-calendar-stats text-xl' />
+    },
+    {
         label: 'Ajustes',
         value: 'settings',
         icon: <i className='tabler-layout-grid text-xl' />
@@ -53,30 +58,30 @@ const tabs = [
     }
 ]
 
-const TournamentContent = ({  tournament: tournamentProp }: TournamentContentProps) => {
+const TournamentContent = ({ tournament: tournamentProp }: TournamentContentProps) => {
     const path = usePathname()
     const router = useRouter()
     const { hasRequiredRole: isAdmin } = useRoleBasedAccess(Role.ADMIN)
     const showSettingsTab = isAdmin
-    
+
     // Obtener el torneo del contexto (fuente principal) o usar la prop como fallback
     const contextTournament = useTournament()
     const tournament = contextTournament.tournament || tournamentProp
-   
+
     // Obtener el tab actual de la URL usando useMemo para evitar recálculos innecesarios
     const currentTabFromPath = useMemo(() => {
         const tabFromPath = path.split('/').pop() || 'home'
         // Si el tab es "settings" pero no se debe mostrar, usar "home" como fallback
         return showSettingsTab ? tabFromPath : (tabFromPath === 'settings' ? 'home' : tabFromPath)
     }, [path, showSettingsTab])
-    
+
     const [activeTab, setActiveTab] = useState(() => currentTabFromPath)
-    
+
     // Sincronizar activeTab con la URL cuando cambia
     useEffect(() => {
         setActiveTab(currentTabFromPath)
     }, [currentTabFromPath])
-    
+
     const handleChange = (event: SyntheticEvent, value: string) => {
         if (!tournament?.id) {
             console.error('Tournament ID is missing, cannot navigate')
@@ -114,7 +119,7 @@ const TournamentContent = ({  tournament: tournamentProp }: TournamentContentPro
                             })}
                         </CustomTabList>
 
-                        
+
                     </TabContext>
                 </Grid>
             )}

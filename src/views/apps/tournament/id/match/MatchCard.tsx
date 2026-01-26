@@ -12,13 +12,15 @@ import Chip from '@mui/material/Chip'
 import { useTheme } from '@mui/material/styles'
 import MatchSets from "./MatchSets"
 import MatchPlayer from "./MatchPlayer"
+import { formatDate } from "@/utils/string"
+
 
 type MatchCardProps = {
     match: Match
 }
 
 const MatchCard = ({ match }: MatchCardProps) => {
- 
+
 
     // Opciones del menú dropdown
     const menuOptions = [
@@ -91,7 +93,7 @@ const MatchCard = ({ match }: MatchCardProps) => {
                     alignItems: 'center',
                 }}
             >
-                <Box className='flex z-[9999] items-center gap-2'>
+                <Box className='flex z-[9999] items-center gap-2 w-full'>
                     <OptionMenu
                         options={menuOptions}
                         leftAlignMenu={true}
@@ -106,7 +108,22 @@ const MatchCard = ({ match }: MatchCardProps) => {
                             }
                         }}
                     />
-                    <Typography className='text-white text-md font-bold'>{match?.match_code}</Typography>
+                    <Box className='flex items-center justify-between gap-2 w-full'>
+                        <div className='flex items-center justify-center sm:flex gap-2 w-full'>
+                            <i className='tabler-calendar-event-filled text-lg text-white hidden sm:block' />
+                            <Typography className='text-white text-sm font-bold'>{formatDate(match.scheduled_at, 'dddd, DD')}</Typography>
+                        </div>
+                        <div className='flex items-center justify-center sm:flex gap-2 w-full'>
+                            <i className='tabler-clock text-lg text-white hidden sm:block' />
+                            <Typography className='text-white text-sm font-bold'>{formatDate(match.scheduled_at, 'hh:mm A')}</Typography>
+                        </div>
+                        <div className='flex items-center justify-center sm:flex gap-2 w-full'>
+                            <i className='tabler-map-pin text-lg text-white hidden sm:block' />
+                            <Typography className='text-white text-sm font-bold'>{match.location}</Typography>
+                        </div>
+
+
+                    </Box>
                 </Box>
                 {/* <Chip
                     label={statusLabel}
@@ -128,13 +145,14 @@ const MatchCard = ({ match }: MatchCardProps) => {
                         <Box className='flex w-full items-center gap-3 '>
 
                             <MatchPlayer
+                                winner={match?.winner}
                                 player={match?.player1}
                                 partner={match?.partner1}
                                 matchType={match?.match_type}
                             />
 
                             {/* Sets*/}
-                            <MatchSets maxSets={match?.max_sets} sets={match?.sets} />
+                            <MatchSets isPlayer1={true} maxSets={match?.max_sets} sets={match?.sets} />
                         </Box>
                     </Grid>
 
@@ -145,12 +163,12 @@ const MatchCard = ({ match }: MatchCardProps) => {
                     {/* Team 2 */}
                     <Grid size={{ xs: 12 }} className='flex items-center'>
                         <Box className='flex items-center gap-3 flex-1'>
-                            
-                                <MatchPlayer player={match?.player2} partner={match?.partner2} matchType={match?.match_type} />
-                                
-                          
+
+                            <MatchPlayer winner={match?.winner} player={match?.player2} partner={match?.partner2} matchType={match?.match_type} />
+
+
                             {/* Sets*/}
-                            <MatchSets maxSets={match?.max_sets} sets={match?.sets} />
+                            <MatchSets isPlayer1={false} maxSets={match?.max_sets} sets={match?.sets} />
                         </Box>
                     </Grid>
                 </Grid>

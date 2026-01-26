@@ -4,9 +4,9 @@ import { Player } from "./playerTypes"
 export type Set = {
     id: number
     match: number
-    player1: number
-    player2: number
-    score: number
+    player1_score: number
+    player2_score: number
+    winner: string
 }
 
 export interface Match {
@@ -28,9 +28,10 @@ export interface Match {
     next_match: Match | null
     winner: Player | null
     winner_partner: Player | null
-    scheduled_at: string | null
-    started_at: string | null
+    scheduled_at: string
+    started_at: string
     completed_at: string | null
+    location: string
     sets: Set[]
     sets_to_win: number
     sets_won_by_player1: number

@@ -7,9 +7,10 @@ type MatchPlayerProps = {
     player: Player
     partner: Player | null
     matchType: "doubles" | "singles"
+    winner?: Player | null
 }
 
-const MatchPlayer = ({ player, partner, matchType }: MatchPlayerProps) => {
+const MatchPlayer = ({ player, partner, matchType, winner }: MatchPlayerProps) => {
     return (
         <Box className='flex items-center gap-3 flex-1'>
 
@@ -30,6 +31,9 @@ const MatchPlayer = ({ player, partner, matchType }: MatchPlayerProps) => {
                         >
 
                             <CustomAvatar
+                                skin='light'
+                                color='success'
+
                                 src={player?.avatar || ''}
                                 alt={player?.first_name}
                                 className='hidden sm:flex'
@@ -70,6 +74,7 @@ const MatchPlayer = ({ player, partner, matchType }: MatchPlayerProps) => {
                         >
 
                             <CustomAvatar
+                                className={winner && winner?.id === player?.id ? 'border-2 border-success' : ''}
                                 src={player?.avatar || ''}
                                 alt={player?.first_name}
 
@@ -95,7 +100,7 @@ const MatchPlayer = ({ player, partner, matchType }: MatchPlayerProps) => {
                                 </>
                             ) : (
                                 <Typography className='xs:text-sm sm:text-lg italic opacity-50' >
-                                  [Por defenir]
+                                    [Por defenir]
                                 </Typography>
                             )
                         }

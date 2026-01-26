@@ -116,8 +116,8 @@ const CreateDivisionForm = ({ tournamentId, division, onCancel, onSuccess }: Pro
         const errorData = await response.json()
         setSubmitError(
           errorData.message ||
-            errorData.detail ||
-            (isEditMode ? 'Error al actualizar la categoría' : 'Error al crear la categoría')
+          errorData.detail ||
+          (isEditMode ? 'Error al actualizar la categoría' : 'Error al crear la categoría')
         )
       }
     } catch (error) {
@@ -166,117 +166,118 @@ const CreateDivisionForm = ({ tournamentId, division, onCancel, onSuccess }: Pro
             </div>
           </div>
 
-        <Divider className='mbe-6' />
+          <Divider className='mbe-6' />
 
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
-          {submitError && (
-            <Alert severity='error' onClose={() => setSubmitError(null)}>
-              {submitError}
-            </Alert>
-          )}
+          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
+            {submitError && (
+              <Alert severity='error' onClose={() => setSubmitError(null)}>
+                {submitError}
+              </Alert>
+            )}
 
-          <div className='flex flex-col gap-4'>
-            <Grid container spacing={4}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                  name='name'
-                  control={control}
-                  render={({ field }) => (
-                    <CustomTextField
-                      {...field}
-                      fullWidth
-                      label='Nombre de la Categoría'
-                      placeholder='Ej: Categoría A'
-                      error={!!errors.name}
-                      helperText={errors.name?.message}
-                    />
-                  )}
-                />
-              </Grid>
+            <div className='flex flex-col gap-4'>
+              <Grid container spacing={4}>
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <Controller
+                    name='name'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        {...field}
+                        fullWidth
+                        label='Nombre de la Categoría'
+                        placeholder='Ej: Categoría A'
+                        error={!!errors.name}
+                        helperText={errors.name?.message}
+                      />
+                    )}
+                  />
+                </Grid>
 
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                  name='format'
-                  control={control}
-                  render={({ field }) => (
-                    <CustomTextField
-                      {...field}
-                      fullWidth
-                      select
-                      label='Formato'
-                      error={!!errors.format}
-                      helperText={errors.format?.message}
-                    >
-                      <MenuItem value='knockout'>Eliminación directa</MenuItem>
-                      <MenuItem value='league'>Liga</MenuItem>
-                      <MenuItem value='round_robin'>Todos contra todos</MenuItem>
-                    </CustomTextField>
-                  )}
-                />
-              </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <Controller
+                    name='format'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        {...field}
+                        fullWidth
+                        select
+                        label='Formato'
+                        error={!!errors.format}
+                        helperText={errors.format?.message}
+                      >
+                        <MenuItem value='knockout'>Eliminación directa</MenuItem>
+                        {/* <MenuItem value='league'>Liga</MenuItem> */}
+                        {/* <MenuItem value='round_robin'>Todos contra todos</MenuItem> */}
+                        <MenuItem value='round_robin_knockout'>Grupos + Eliminación directa</MenuItem>
+                      </CustomTextField>
+                    )}
+                  />
+                </Grid>
 
-              <Grid size={{ xs: 12 }}>
-                <Controller
-                  name='description'
-                  control={control}
-                  render={({ field }) => (
-                    <CustomTextField
-                      {...field}
-                      fullWidth
-                      multiline
-                      rows={3}
-                      label='Descripción'
-                      placeholder='Ingrese una descripción de la categoría'
-                      error={!!errors.description}
-                      helperText={errors.description?.message}
-                    />
-                  )}
-                />
-              </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <Controller
+                    name='description'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        {...field}
+                        fullWidth
+                        multiline
+                        rows={3}
+                        label='Descripción'
+                        placeholder='Ingrese una descripción de la categoría'
+                        error={!!errors.description}
+                        helperText={errors.description?.message}
+                      />
+                    )}
+                  />
+                </Grid>
 
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Controller
-                  name='gender'
-                  control={control}
-                  render={({ field }) => (
-                    <CustomTextField
-                      {...field}
-                      fullWidth
-                      select
-                      label='Género'
-                      error={!!errors.gender}
-                      helperText={errors.gender?.message}
-                    >
-                      <MenuItem value='any'>Mixto</MenuItem>
-                      <MenuItem value='male'>Masculino</MenuItem>
-                      <MenuItem value='female'>Femenino</MenuItem>
-                    </CustomTextField>
-                  )}
-                />
-              </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Controller
+                    name='gender'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        {...field}
+                        fullWidth
+                        select
+                        label='Género'
+                        error={!!errors.gender}
+                        helperText={errors.gender?.message}
+                      >
+                        <MenuItem value='any'>Mixto</MenuItem>
+                        <MenuItem value='male'>Masculino</MenuItem>
+                        <MenuItem value='female'>Femenino</MenuItem>
+                      </CustomTextField>
+                    )}
+                  />
+                </Grid>
 
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Controller
-                  name='participant_type'
-                  control={control}
-                  render={({ field }) => (
-                    <CustomTextField
-                      {...field}
-                      fullWidth
-                      select
-                      label='Tipo de Participante'
-                      error={!!errors.participant_type}
-                      helperText={errors.participant_type?.message}
-                    >
-                      <MenuItem value='single'>Sencillos</MenuItem>
-                      <MenuItem value='doubles'>Dobles</MenuItem>
-                    </CustomTextField>
-                  )}
-                />
-              </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Controller
+                    name='participant_type'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        {...field}
+                        fullWidth
+                        select
+                        label='Tipo de Participante'
+                        error={!!errors.participant_type}
+                        helperText={errors.participant_type?.message}
+                      >
+                        <MenuItem value='single'>Sencillos</MenuItem>
+                        <MenuItem value='doubles'>Dobles</MenuItem>
+                      </CustomTextField>
+                    )}
+                  />
+                </Grid>
 
-              <Grid size={{ xs: 12, md: 4 }}>
-                {/* <Controller
+                <Grid size={{ xs: 12, md: 4 }}>
+                  {/* <Controller
                   name='max_participants'
                   control={control}
                   render={({ field }) => (
@@ -292,9 +293,9 @@ const CreateDivisionForm = ({ tournamentId, division, onCancel, onSuccess }: Pro
                     />
                   )}
                 /> */}
-              </Grid>
+                </Grid>
 
-              {/* <Grid size={{ xs: 12, md: 6 }}>
+                {/* <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                   name='born_after'
                   control={control}
@@ -312,64 +313,64 @@ const CreateDivisionForm = ({ tournamentId, division, onCancel, onSuccess }: Pro
                 />
               </Grid> */}
 
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                  name='is_active'
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      control={<Switch checked={field.value} onChange={event => field.onChange(event.target.checked)} />}
-                      label='Categoría activa'
-                    />
-                  )}
-                />
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <Controller
+                    name='is_active'
+                    control={control}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        control={<Switch checked={field.value} onChange={event => field.onChange(event.target.checked)} />}
+                        label='Categoría activa'
+                      />
+                    )}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-
-          <Divider />
-
-          <div className='flex justify-between flex-wrap gap-4'>
-            {isEditMode && (
-              <Button
-                variant='outlined'
-                color='error'
-                type='button'
-                onClick={() => setDeleteDialogOpen(true)}
-                disabled={isSubmitting || isDeleting}
-              >
-                Eliminar
-              </Button>
-            )}
-            <div className='flex gap-4 ml-auto'>
-              <Button variant='outlined' type='button' onClick={onCancel} disabled={isSubmitting || isDeleting}>
-                Cancelar
-              </Button>
-              <Button variant='contained' type='submit' disabled={isSubmitting || isDeleting}>
-                {isSubmitting ? (isEditMode ? 'Guardando...' : 'Creando...') : isEditMode ? 'Guardar Cambios' : 'Crear Categoría'}
-              </Button>
             </div>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
 
-    <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-      <DialogTitle>Confirmar eliminación</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          ¿Estás seguro de que deseas eliminar la categoría &quot;{division?.name}&quot;? Esta acción eliminará también todos los jugadores, partidos y estadísticas asociados a esta categoría. Esta acción no se puede deshacer.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setDeleteDialogOpen(false)} disabled={isDeleting}>
-          Cancelar
-        </Button>
-        <Button onClick={handleDelete} color='error' variant='contained' disabled={isDeleting}>
-          {isDeleting ? 'Eliminando...' : 'Eliminar'}
-        </Button>
-      </DialogActions>
-    </Dialog>
+            <Divider />
+
+            <div className='flex justify-between flex-wrap gap-4'>
+              {isEditMode && (
+                <Button
+                  variant='outlined'
+                  color='error'
+                  type='button'
+                  onClick={() => setDeleteDialogOpen(true)}
+                  disabled={isSubmitting || isDeleting}
+                >
+                  Eliminar
+                </Button>
+              )}
+              <div className='flex gap-4 ml-auto'>
+                <Button variant='outlined' type='button' onClick={onCancel} disabled={isSubmitting || isDeleting}>
+                  Cancelar
+                </Button>
+                <Button variant='contained' type='submit' disabled={isSubmitting || isDeleting}>
+                  {isSubmitting ? (isEditMode ? 'Guardando...' : 'Creando...') : isEditMode ? 'Guardar Cambios' : 'Crear Categoría'}
+                </Button>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Confirmar eliminación</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            ¿Estás seguro de que deseas eliminar la categoría &quot;{division?.name}&quot;? Esta acción eliminará también todos los jugadores, partidos y estadísticas asociados a esta categoría. Esta acción no se puede deshacer.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)} disabled={isDeleting}>
+            Cancelar
+          </Button>
+          <Button onClick={handleDelete} color='error' variant='contained' disabled={isDeleting}>
+            {isDeleting ? 'Eliminando...' : 'Eliminar'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }
