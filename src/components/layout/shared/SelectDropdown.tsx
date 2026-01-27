@@ -27,7 +27,7 @@ const SelectDropdown = (props: SelectDropdownProps = {}) => {
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
-       
+
     }
 
     const handleClose = () => {
@@ -44,14 +44,14 @@ const SelectDropdown = (props: SelectDropdownProps = {}) => {
     }
 
     return (
-        <div >
-            <Button  disabled={disabled} size='large' className='max-h-10 w-full max-w-64 flex-grow' endIcon={  <i className='tabler-caret-down-filled' />} variant='outlined' aria-controls='basic-menu' aria-haspopup='true' onClick={handleClick}>
-              {divisions[selectedIndex]?.name}
+        <div className='z-[9995]' >
+            <Button disabled={disabled} size='large' className='max-h-10 w-full max-w-64 flex-grow' endIcon={<i className='tabler-caret-down-filled' />} variant='outlined' aria-controls='basic-menu' aria-haspopup='true' onClick={handleClick}>
+                {divisions[selectedIndex]?.name}
             </Button>
-            <Menu  id='basic-menu' anchorEl={anchorEl} onClose={handleClose} open={Boolean(anchorEl)}>
+            <Menu className='z-[9996]' id='basic-menu' anchorEl={anchorEl} onClose={handleClose} open={Boolean(anchorEl)}>
                 {
-                    divisions.map((option, index)=>(
-                        <MenuItem key={index} onClick={()=>handleMenuItemClick(index)}>{option.name}</MenuItem>
+                    divisions.map((option, index) => (
+                        <MenuItem key={index} onClick={() => handleMenuItemClick(index)}>{option.name}</MenuItem>
                     ))
                 }
             </Menu>

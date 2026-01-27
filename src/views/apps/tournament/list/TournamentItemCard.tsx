@@ -1,3 +1,4 @@
+'use client'
 import CardContent from "@mui/material/CardContent"
 import Card from "@mui/material/Card"
 import CardMedia from "@mui/material/CardMedia"
@@ -11,6 +12,9 @@ import Button from "@mui/material/Button"
 import { useRouter } from 'next/navigation'
 import Avatar from "@mui/material/Avatar"
 import ActionArea from "@mui/material/CardActionArea"
+import { useState } from 'react'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
 type TournamentCardProps = {
     tournament: Tournament
@@ -28,8 +32,10 @@ const InfoRow = styled(Box)(({ theme }) => ({
 const TournamentItemCard = ({ tournament }: TournamentCardProps) => {
 
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleCardClick = () => {
+        setIsLoading(true)
         router.push(`/tournaments/${tournament.id}/home`)
     }
 
@@ -37,30 +43,30 @@ const TournamentItemCard = ({ tournament }: TournamentCardProps) => {
     return (
         <Card className='cursor-pointer hover:scale-105 transition-all duration-300'>
             <ActionArea
-            onClick={handleCardClick}
+                onClick={handleCardClick}
             >
                 <CardMedia image={tournament.banner || 'https://res.cloudinary.com/dd7dzmgeg/image/upload/v1761687717/Group_6_zfjjy7.png'} className='bs-[150px]' >
-                {
-                    tournament.status === 'draft' && (
-                        <Chip
-                        icon={<i className='tabler-alert-triangle' />}
-                        label={tournament.status.toUpperCase()}
-                        size='small'
-                        className='ml-2 mt-2'
-                        sx={{
-                            backgroundColor: '#ff9800',
-                            color: 'black',
-                            fontWeight: 600,
-                            fontSize: '0.75rem',
-                            height: '24px',
-                            '& .MuiChip-icon': {
-                                color: 'black'
-                            }
-                        }}
-                    />
-                    )
-                }
-                   
+                    {
+                        tournament.status === 'draft' && (
+                            <Chip
+                                icon={<i className='tabler-alert-triangle' />}
+                                label={tournament.status.toUpperCase()}
+                                size='small'
+                                className='ml-2 mt-2'
+                                sx={{
+                                    backgroundColor: '#ff9800',
+                                    color: 'black',
+                                    fontWeight: 600,
+                                    fontSize: '0.75rem',
+                                    height: '24px',
+                                    '& .MuiChip-icon': {
+                                        color: 'black'
+                                    }
+                                }}
+                            />
+                        )
+                    }
+
                     {/* <div className='rounded-bs-md absolute top-0 right-0 mbs-[-70px] border-[5px] mis-[-5px] border-be-0  border-backgroundPaper bg-backgroundPaper'>
           <img height={80} width={80} src={tournament.logo || '/images/empty/tournament.png'} className='rounded' alt='Profile Background' />
         </div> */}
@@ -126,9 +132,15 @@ const TournamentItemCard = ({ tournament }: TournamentCardProps) => {
 
 
                 </CardContent>
-            </ActionArea>
 
-        </Card>
+            </ActionArea>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </Card >
     )
 }
 

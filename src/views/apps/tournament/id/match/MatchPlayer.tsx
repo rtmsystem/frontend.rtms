@@ -21,7 +21,8 @@ const MatchPlayer = ({ player, partner, matchType, winner }: MatchPlayerProps) =
                     <AvatarGroup className='pull-up' max={2}>
                         <Badge
                             overlap='circular'
-                            className='hidden sm:flex'
+
+                            className='hidden sm:flex z-10'
                             badgeContent={<span className='text-2xl'>🇨🇴</span>}
                             anchorOrigin={{
                                 vertical: 'bottom',

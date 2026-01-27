@@ -42,6 +42,7 @@ import themeConfig from '@configs/themeConfig'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 
 
@@ -88,6 +89,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [errorState, setErrorState] = useState<ErrorType | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Vars
   const darkImg = '/images/pages/auth-mask-dark.png'
@@ -129,6 +131,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    setIsLoading(true)
     const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
@@ -147,6 +150,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
         setErrorState(error)
       }
     }
+    setIsLoading(false)
   }
 
   return (
@@ -253,9 +257,15 @@ const Login = ({ mode }: { mode: SystemMode }) => {
                 Forgot password?
               </Typography>
             </div> */}
-            <Button fullWidth variant='contained' type='submit'>
+            <LoadingButton
+              fullWidth
+              variant='contained'
+              type='submit'
+              loading={isLoading}
+            >
               Login
-            </Button>
+            </LoadingButton>
+
             {/* <div className='flex justify-center items-center flex-wrap gap-2'>
               <Typography>New on our platform?</Typography>
               <Typography component={Link} href={'/register'} color='primary.main'>

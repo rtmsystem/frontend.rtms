@@ -1,5 +1,8 @@
 'use client'
 import CustomAvatar from '@/@core/components/mui/Avatar'
+import CustomTextField from '@/@core/components/mui/TextField'
+import MenuItem from '@mui/material/MenuItem'
+import InputAdornment from '@mui/material/InputAdornment'
 import SelectDropdown from '@/components/layout/shared/SelectDropdown'
 import type { Match } from '@/types/apps/tournament/matchTypes'
 import { Division } from '@/types/apps/tournament/tournamentTypes'
@@ -39,6 +42,8 @@ const MatchTab = ({ matches }: MatchTabProps) => {
     const [scheduleMatchesLoading, setScheduleMatchesLoading] = useState<boolean>(false)
     const { hasRequiredRole: isAdmin, isLoading } = useRoleBasedAccess(Role.ADMIN)
     const methods = useForm<FormData>({})
+    const [statusFilter, setStatusFilter] = useState<Match['status'] | 'all'>('all')
+    const [searchQuery, setSearchQuery] = useState('')
 
     // Sincronizar divisions cuando el torneo se actualiza
     useEffect(() => {
@@ -131,19 +136,37 @@ const MatchTab = ({ matches }: MatchTabProps) => {
     // Filtrar involvements por la categoría seleccionada
     const filteredMatches: Match[] = useMemo(() => {
 
-        if (!divisions || divisions.length === 0) {
-            return allMatches
+        let matches = allMatches
+
+        if (divisions && divisions.length > 0 && divisions[selectedCategoryIndex]) {
+            matches = matches.filter(
+                (match) => match.division_name === divisions[selectedCategoryIndex].name
+            )
         }
 
-        const selectedMatch = allMatches[selectedCategoryIndex]
-        if (!selectedMatch) {
-            return allMatches
+        // Filter by status
+        if (statusFilter !== 'all') {
+            matches = matches.filter(match => match.status === statusFilter)
         }
 
-        return allMatches.filter(
-            (allMatches) => allMatches.division_name === divisions[selectedCategoryIndex].name
-        )
-    }, [allMatches, selectedCategoryIndex, divisions])
+        // Filter by search query
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase()
+            matches = matches.filter(match => {
+                const player1Name = `${match.player1?.first_name || ''} ${match.player1?.last_name || ''}`.toLowerCase()
+                const player2Name = `${match.player2?.first_name || ''} ${match.player2?.last_name || ''}`.toLowerCase()
+                const partner1Name = match.partner1 ? `${match.partner1.first_name || ''} ${match.partner1.last_name || ''}`.toLowerCase() : ''
+                const partner2Name = match.partner2 ? `${match.partner2.first_name || ''} ${match.partner2.last_name || ''}`.toLowerCase() : ''
+
+                return player1Name.includes(query) ||
+                    player2Name.includes(query) ||
+                    partner1Name.includes(query) ||
+                    partner2Name.includes(query)
+            })
+        }
+
+        return matches
+    }, [allMatches, selectedCategoryIndex, divisions, statusFilter, searchQuery])
 
 
     return (
@@ -159,6 +182,33 @@ const MatchTab = ({ matches }: MatchTabProps) => {
                     </div>
                 </div>
                 <div className='flex justify-end w-full sm:flex-nowrap flex-wrap  items-center gap-4 '>
+                    <CustomTextField
+                        select
+                        fullWidth
+                        value={statusFilter}
+                        onChange={e => setStatusFilter(e.target.value as any)}
+                        sx={{ maxWidth: { sm: 200, xs: '100%' } }}
+                    >
+                        <MenuItem value='all'>Todos</MenuItem>
+                        <MenuItem value='pending'>Pendiente</MenuItem>
+                        <MenuItem value='in_progress'>En Progreso</MenuItem>
+                        <MenuItem value='completed'>Completado</MenuItem>
+                    </CustomTextField>
+
+                    <CustomTextField
+                        placeholder='Buscar jugador...'
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        fullWidth
+                        sx={{ maxWidth: { sm: 250, xs: '100%' } }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position='start'>
+                                    <i className='tabler-search' />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
                     <SelectDropdown
                         selectedIndex={selectedCategoryIndex}
                         onSelectionChange={setSelectedCategoryIndex}
@@ -181,43 +231,45 @@ const MatchTab = ({ matches }: MatchTabProps) => {
                                         }
                                     </>
                                 ) : (
-                                    <div className="flex w-full justify-center gap-2" >
-                                        <FormProvider {...methods}>
-                                            <GenerateMatchesCard
-                                                selectedDivision={divisions[selectedCategoryIndex]}
-                                                handleGenerateMatches={handleGenerateMatches}
-                                                generateMatchesLoading={generateMatchesLoading}
-                                            />
+                                    isAdmin ? (
+                                        <div className="flex w-full justify-center gap-2" >
+                                            <FormProvider {...methods}>
+                                                <GenerateMatchesCard
+                                                    selectedDivision={divisions[selectedCategoryIndex]}
+                                                    handleGenerateMatches={handleGenerateMatches}
+                                                    generateMatchesLoading={generateMatchesLoading}
+                                                />
 
-                                            <ScheduleSettingsCard
-                                                onSchedule={handleGenerateMatches}
-                                                isLoading={scheduleMatchesLoading}
-                                            />
+                                                <ScheduleSettingsCard
+                                                    onSchedule={handleGenerateMatches}
+                                                    isLoading={scheduleMatchesLoading}
+                                                />
 
-                                        </FormProvider>
-
-
-
-                                    </div>
+                                            </FormProvider>
+                                        </div>
+                                    ) : (
+                                        <EmptyState
+                                            icon='tabler-calendar-stats'
+                                            title='No hay partidos programados'
+                                            description='¡Mantente atento! Muy pronto estaremos publicando los partidos del torneo.'
+                                        />
+                                    )
                                 )
                             }
                         </>
                     ) :
-                        isAdmin ?
-
-                            (
-                                <Alert className='w-full' severity='warning'>
-                                    <AlertTitle>Los Jugadores de la categoría no han sido confirmados</AlertTitle>
-                                    <Typography variant='body2'>La jugadores de la categoría no han sido confirmados, para poder gestionar los partidos se deben confirmar los jugadores</Typography>
-                                </Alert>
-                            ) :
-                            (
-                                <EmptyState
-                                    icon='tabler-calendar-stats'
-                                    title='No hay partidos programados'
-                                    description='¡Mantente atento! Muy pronto estaremos publicando los partidos del torneo.'
-                                />
-                            )
+                        isAdmin ? (
+                            <Alert className='w-full' severity='warning'>
+                                <AlertTitle>Los Jugadores de la categoría no han sido confirmados</AlertTitle>
+                                <Typography variant='body2'>La jugadores de la categoría no han sido confirmados, para poder gestionar los partidos se deben confirmar los jugadores</Typography>
+                            </Alert>
+                        ) : (
+                            <EmptyState
+                                icon='tabler-calendar-stats'
+                                title='No hay partidos programados'
+                                description='¡Mantente atento! Muy pronto estaremos publicando los partidos del torneo.'
+                            />
+                        )
                 }
             </Grid>
         </Grid>

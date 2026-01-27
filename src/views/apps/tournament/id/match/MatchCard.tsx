@@ -13,6 +13,8 @@ import { useTheme } from '@mui/material/styles'
 import MatchSets from "./MatchSets"
 import MatchPlayer from "./MatchPlayer"
 import { formatDate } from "@/utils/string"
+import useRoleBasedAccess from "@/hooks/useRoleBasedAccess"
+import Role from "@/types/apps/user/role"
 
 
 type MatchCardProps = {
@@ -20,6 +22,7 @@ type MatchCardProps = {
 }
 
 const MatchCard = ({ match }: MatchCardProps) => {
+    const { hasRequiredRole: isAdmin, isLoading } = useRoleBasedAccess(Role.ADMIN)
 
 
     // Opciones del menú dropdown
@@ -91,31 +94,37 @@ const MatchCard = ({ match }: MatchCardProps) => {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    paddingY: isAdmin ? 0 : 1
                 }}
             >
-                <Box className='flex z-[9999] items-center gap-2 w-full'>
-                    <OptionMenu
-                        options={menuOptions}
-                        leftAlignMenu={true}
-                        icon='tabler-dots-vertical'
-                        iconClassName='text-white text-xl'
-                        iconButtonProps={{
-                            sx: {
-                                color: 'white',
-                                '&:hover': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                                }
-                            }
-                        }}
-                    />
+
+                <Box className='flex z-[9991] items-center gap-2 w-full'>
+                    {
+                        isAdmin && (
+                            <OptionMenu
+                                options={menuOptions}
+                                leftAlignMenu={true}
+                                icon='tabler-dots-vertical'
+                                iconClassName='text-white text-xl  '
+                                iconButtonProps={{
+                                    sx: {
+                                        color: 'white',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                                        }
+                                    }
+                                }}
+                            />
+                        )
+                    }
                     <Box className='flex items-center justify-between gap-2 w-full'>
                         <div className='flex items-center justify-center sm:flex gap-2 w-full'>
-                            <i className='tabler-calendar-event-filled text-lg text-white hidden sm:block' />
+                            <i className='tabler-calendar-event-filled text-lg text-white hidden sm:block z-[1]' />
                             <Typography className='text-white text-sm font-bold'>{formatDate(match.scheduled_at, 'dddd, DD')}</Typography>
                         </div>
                         <div className='flex items-center justify-center sm:flex gap-2 w-full'>
                             <i className='tabler-clock text-lg text-white hidden sm:block' />
-                            <Typography className='text-white text-sm font-bold'>{formatDate(match.scheduled_at, 'hh:mm A')}</Typography>
+                            <Typography className='text-white text-sm font-bold z-0'>{formatDate(match.scheduled_at, 'hh:mm A')}</Typography>
                         </div>
                         <div className='flex items-center justify-center sm:flex gap-2 w-full'>
                             <i className='tabler-map-pin text-lg text-white hidden sm:block' />
@@ -125,6 +134,8 @@ const MatchCard = ({ match }: MatchCardProps) => {
 
                     </Box>
                 </Box>
+
+
                 {/* <Chip
                     label={statusLabel}
                     size='small'
