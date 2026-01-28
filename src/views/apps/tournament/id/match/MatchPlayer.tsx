@@ -54,8 +54,8 @@ const MatchPlayer = ({ player, partner, matchType, winner }: MatchPlayerProps) =
                         >
 
                             <CustomAvatar
-                                src={player?.avatar || ''}
-                                alt={player?.first_name}
+                                src={partner?.avatar || ''}
+                                alt={partner?.first_name}
 
                                 size={50}
                             />

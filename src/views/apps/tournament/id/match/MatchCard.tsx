@@ -16,6 +16,11 @@ import { formatDate } from "@/utils/string"
 import useRoleBasedAccess from "@/hooks/useRoleBasedAccess"
 import Role from "@/types/apps/user/role"
 
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuthToken } from '@/hooks/useAuthToken'
+import { toast } from 'react-toastify'
+import EditMatchDialog from './EditMatchDialog'
 
 type MatchCardProps = {
     match: Match
@@ -23,6 +28,36 @@ type MatchCardProps = {
 
 const MatchCard = ({ match }: MatchCardProps) => {
     const { hasRequiredRole: isAdmin, isLoading } = useRoleBasedAccess(Role.ADMIN)
+    const [isEditOpen, setIsEditOpen] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const { fetchApi } = useAuthToken()
+    const router = useRouter()
+
+    const handleUpdateMatch = async (data: { scheduled_at: string; location: string }) => {
+        setIsEditing(true)
+        try {
+            const response = await fetchApi(`/matches/${match.id}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+
+            if (response.ok) {
+                toast.success('Partido actualizado exitosamente')
+                setIsEditOpen(false)
+                router.refresh()
+            } else {
+                toast.error('Error al actualizar el partido')
+            }
+        } catch (error) {
+            console.error(error)
+            toast.error('Error al actualizar el partido')
+        } finally {
+            setIsEditing(false)
+        }
+    }
 
 
     // Opciones del menú dropdown
@@ -32,8 +67,7 @@ const MatchCard = ({ match }: MatchCardProps) => {
             icon: 'tabler-edit',
             menuItemProps: {
                 onClick: () => {
-                    // TODO: Implementar lógica de edición
-                    console.log('Editar partido:', match.id)
+                    setIsEditOpen(true)
                 }
             }
         },
@@ -90,7 +124,7 @@ const MatchCard = ({ match }: MatchCardProps) => {
             <Box
                 sx={{
                     backgroundColor: '#14b8a6', // Teal color
-                    zIndex: 9999,  // para que el menú dropdown aparezca por encima de los sets
+                    zIndex: 1050,  // para que el menú dropdown aparezca por encima de los sets
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -98,7 +132,7 @@ const MatchCard = ({ match }: MatchCardProps) => {
                 }}
             >
 
-                <Box className='flex z-[9991] items-center gap-2 w-full'>
+                <Box className='flex z-[1051] items-center gap-2 w-full'>
                     {
                         isAdmin && (
                             <OptionMenu
@@ -184,7 +218,14 @@ const MatchCard = ({ match }: MatchCardProps) => {
                     </Grid>
                 </Grid>
             </Box>
-        </Card>
+            <EditMatchDialog
+                open={isEditOpen}
+                onClose={() => setIsEditOpen(false)}
+                match={match}
+                onUpdate={handleUpdateMatch}
+                isLoading={isEditing}
+            />
+        </Card >
     )
 }
 
