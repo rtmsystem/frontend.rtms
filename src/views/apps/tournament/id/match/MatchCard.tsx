@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation'
 import { useAuthToken } from '@/hooks/useAuthToken'
 import { toast } from 'react-toastify'
 import EditMatchDialog from './EditMatchDialog'
+import AddMatchResultsModal from './AddMatchResultsModal'
 
 type MatchCardProps = {
     match: Match
@@ -29,6 +30,7 @@ type MatchCardProps = {
 const MatchCard = ({ match }: MatchCardProps) => {
     const { hasRequiredRole: isAdmin, isLoading } = useRoleBasedAccess(Role.ADMIN)
     const [isEditOpen, setIsEditOpen] = useState(false)
+    const [isAddResultsOpen, setIsAddResultsOpen] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const { fetchApi } = useAuthToken()
     const router = useRouter()
@@ -57,6 +59,11 @@ const MatchCard = ({ match }: MatchCardProps) => {
         } finally {
             setIsEditing(false)
         }
+    }
+
+    const handleAddResultsSuccess = () => {
+        setIsAddResultsOpen(false)
+        router.refresh()
     }
 
 
@@ -95,8 +102,7 @@ const MatchCard = ({ match }: MatchCardProps) => {
             ),
             menuItemProps: {
                 onClick: () => {
-                    // TODO: Implementar lógica para agregar resultados
-                    console.log('Agregar resultados:', match.id)
+                    setIsAddResultsOpen(true)
                 }
             }
         },
@@ -224,6 +230,12 @@ const MatchCard = ({ match }: MatchCardProps) => {
                 match={match}
                 onUpdate={handleUpdateMatch}
                 isLoading={isEditing}
+            />
+            <AddMatchResultsModal
+                open={isAddResultsOpen}
+                onClose={() => setIsAddResultsOpen(false)}
+                match={match}
+                onSuccess={handleAddResultsSuccess}
             />
         </Card >
     )
