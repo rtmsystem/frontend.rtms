@@ -26,6 +26,8 @@ export type Involvement = {
     nationality_flag: string
     height_cm: number
     handedness: string
+    knockout_points: string,
+    division_id: number
 }
 
 

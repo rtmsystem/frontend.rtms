@@ -11,7 +11,7 @@ type PlayerPublicCardProps = {
 const PlayerPublicCard = ({ involvement }: PlayerPublicCardProps) => {
     // Hardcoded / Default values as requested
     const rank = ""
-    const points = "0 Pts."
+
     const height = involvement.height_cm ? `${parseFloat(involvement.height_cm.toString())} cm` : '- -'
     const hand = involvement.handedness
         ? (involvement.handedness === 'right_handed' ? 'Derecha' : involvement.handedness === 'left_handed' ? 'Izquierda' : 'Ambidiestro')
@@ -161,7 +161,7 @@ const PlayerPublicCard = ({ involvement }: PlayerPublicCardProps) => {
                         }}
                         className='text-primary'
                         variant="h3">
-                        {points}
+                        { `${involvement.knockout_points} Ptos` }
                     </Typography>
                 </Box>
 
