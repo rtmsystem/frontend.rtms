@@ -45,6 +45,7 @@
     "react-perfect-scrollbar": "1.5.8",
     "react-toastify": "^11.0.5",
     "react-use": "17.6.0",
+    "react-xarrows": "^2.0.2",
     "server-only": "0.0.1",
     "valibot": "^1.1.0",
     "yarn": "^1.22.22"
@@ -75,7 +76,7 @@
     "tailwindcss": "3.4.17",
     "tailwindcss-logical": "3.0.1",
     "tsx": "4.19.2",
-    "typescript": "5.5.4"
+    "typescript": "5.9.3"
   },
   "resolutions": {
     "rimraf": "^5.0.7"

@@ -168,7 +168,6 @@ const MatchTab = ({ matches }: MatchTabProps) => {
         return matches
     }, [allMatches, selectedCategoryIndex, divisions, statusFilter, searchQuery])
 
-
     return (
         <Grid container spacing={6}>
             <Grid className="flex w-full justify-between md:flex-nowrap flex-wrap  gap-4" size={{ xs: 12 }}>

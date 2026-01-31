@@ -23,14 +23,23 @@ const TournamentStandingsPage = async (props: TournamentStandingsPageProps) => {
     const userRole = session?.user?.role || Role.GUEST[2]
     const isAdmin = Role.ADMIN.includes(userRole)
 
+    // Fetch standings and matches in parallel
+    const [standingsResponse, matchesResponse] = await Promise.all([
+        serverFetchApi(
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/tournaments/${tournamentId}/groups/`
+        ),
+        serverFetchApi(
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/matches?tournament_id=${tournamentId}`
+        )
+    ])
 
-    const standingsResponse = await serverFetchApi(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/tournaments/${tournamentId}/groups/`
-    )
     const standingsData = await standingsResponse.json()
-    const standings = standingsData.data || []
+    const matchesData = await matchesResponse.json()
 
-    return <StandingsTab groups={standings} />
+    const standings = standingsData.data || []
+    const matches = matchesData.data || []
+
+    return <StandingsTab groups={standings} matches={matches} />
 }
 
 export default TournamentStandingsPage
