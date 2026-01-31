@@ -141,12 +141,12 @@ const PlayerContent = ({ involvements }: PlayersTabProps) => {
 
             <Grid size={{ xs: 12 }}>
                 {filteredInvolvements.length > 0 ? (
-                    filteredInvolvements.map((involvement) => {
+                    filteredInvolvements.map((involvement,index) => {
                         return (
                             isAdmin ? (
                                 <PlayerCard key={involvement.id} involvement={involvement} />
                             ) : (
-                                <PlayerPublicCard key={involvement.id} involvement={involvement} />
+                                <PlayerPublicCard index={index} key={involvement.id} involvement={involvement} />
                             )
                         )
                     })

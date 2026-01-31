@@ -27,7 +27,8 @@ export type Involvement = {
     height_cm: number
     handedness: string
     knockout_points: string,
-    division_id: number
+    division_id: number,
+    
 }
 
 

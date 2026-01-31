@@ -38,9 +38,9 @@ const PublicPlayerContent = ({ involvements }: PublicPlayerContentProps) => {
             </Grid>
 
             {filteredInvolvements?.length > 0 ? (
-                filteredInvolvements.map((involvement) => (
+                filteredInvolvements.map((involvement, index) => (
                     <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }} key={involvement.id}>
-                        <PlayerPublicCard involvement={involvement} />
+                        <PlayerPublicCard index={index} involvement={involvement} />
                     </Grid>
                 ))
             ) : (

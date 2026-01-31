@@ -5,12 +5,13 @@ import Card from "@mui/material/Card"
 import CardMedia from "@mui/material/CardMedia"
 import Paper from "@mui/material/Paper"
 type PlayerPublicCardProps = {
-    involvement: Involvement
+    involvement: Involvement,
+    index: number
 }
 
-const PlayerPublicCard = ({ involvement }: PlayerPublicCardProps) => {
+const PlayerPublicCard = ({ involvement, index }: PlayerPublicCardProps) => {
     // Hardcoded / Default values as requested
-    const rank = ""
+    const rank = index + 1
 
     const height = involvement.height_cm ? `${parseFloat(involvement.height_cm.toString())} cm` : '- -'
     const hand = involvement.handedness
@@ -150,7 +151,7 @@ const PlayerPublicCard = ({ involvement }: PlayerPublicCardProps) => {
                 >
                     <Typography
                         variant="h3"
-                        className='text-white'
+                        className='text-white capitalize'
 
                     >
                         {fullName}

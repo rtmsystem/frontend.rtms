@@ -19,7 +19,7 @@ const TournamentPlayerPage = async (props: TournamentPlayerPageProps) => {
 
     const involvementsData = await response.json()
    
-    const involvements: Involvement[] = involvementsData.data
+    const involvements: Involvement[] = involvementsData.results
 
     return (
         <PlayersTab involvements={involvements} />
